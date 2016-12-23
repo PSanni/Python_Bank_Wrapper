@@ -25,9 +25,8 @@ class Wrapper:
     _Uris={}
     _ifsc_req = IFSCRequests()
 
-    def __init__(self):
+    def init(self):
         self._readConfig()
-
 
     def _readConfig(self):
 
@@ -35,10 +34,10 @@ class Wrapper:
             Raise: Exception if file not found on given path
         """
 
-        if exists('/home/kakashi/Repos/IFSCWrapper/lib/Uri.conf') == False:
+        if exists('Uri.conf') == False:
             raise IFSCWrapperException('Unable to read configuration file')
 
-        with open('/home/kakashi/Repos/IFSCWrapper/lib/Uri.conf','r')as reader:
+        with open('Uri.conf','r')as reader:
             csv_reader = csv.reader(reader,delimiter=",")
 
             for row in csv_reader:
@@ -49,7 +48,7 @@ class Wrapper:
     def getBankList(self):
         """Get supported bank list
         if_fail: Returns IFSCWrapperException.
-        Returns: List of bankes in python list() 
+        Returns: List of bankes in python list()
         """
 
         Uri = self._Uris["G_BL"]
@@ -138,6 +137,3 @@ class Wrapper:
         if data['status'] == 'failed':
             raise IFSCWrapperException(data['message'])
         return list(data["data"])
-
-w=Wrapper()
-print(w.getBankList_State('Gujarat'))
